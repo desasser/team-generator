@@ -30,9 +30,9 @@ function firstQuestion() {
         addManager();
         break;
 
-      // case "Engineer":
-      //   addEngineer();
-      //   break;
+      case "Engineer":
+        addEngineer();
+        break;
 
       // case "Intern":
       //   addIntern();
@@ -73,6 +73,35 @@ function addManager() {
   ]).then(managerResponse => {
     const newManager = new Manager(managerResponse.name, managerResponse.id, managerResponse.email, managerResponse.officeNumber);
     employeeArr.push(newManager);
+    firstQuestion();
+  })
+}
+
+function addEngineer() {
+  inquirer.prompt([
+    {
+      type: 'input',
+      message: 'What is your name?',
+      name: 'name'
+    },
+    {
+      type: 'input',
+      message: 'What is your ID?',
+      name: 'id'
+    },
+    {
+      type: 'input',
+      message: 'What is your email?',
+      name: 'email'
+    },
+    {
+      type: 'input',
+      message: 'What is your Github username?',
+      name: 'githubUsername'
+    }
+  ]).then(engineerResponse => {
+    const newEngineer = new Engineer(engineerResponse.name, engineerResponse.id, engineerResponse.email, engineerResponse.githubUsername);
+    employeeArr.push(newEngineer);
     firstQuestion();
   })
 }
