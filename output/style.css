@@ -1,0 +1,12 @@
+/* body {
+  background-color: rgb(255, 243, 223);
+} */
+
+.team-heading {
+  background: linear-gradient(to right, #6db7e2 5%, #6db7e236 40%, #6db7e207 100%), linear-gradient(to left, #6db7e2 5%,  #6db7e236 40%, #6db7e207 100%);
+  border-radius: 0;
+}
+
+.card-header {
+  background-color: #6db7e2;
+}

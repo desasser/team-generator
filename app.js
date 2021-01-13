@@ -40,8 +40,8 @@ function firstQuestion() {
 
       case "Team Finished":
         const data = render(employeeArr);
-
-        fs.writeFile('./output/team.html', data, (err) => {
+        //'./output/team.html'
+        fs.writeFile(outputPath, data, (err) => {
           if (err) throw err;
           console.log('The file has been saved!');
         });
