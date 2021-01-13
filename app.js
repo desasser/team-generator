@@ -39,7 +39,12 @@ function firstQuestion() {
         break;
 
       case "Team Finished":
-        console.log('Complete!');
+        const data = render(employeeArr);
+
+        fs.writeFile('./output/team.html', data, (err) => {
+          if (err) throw err;
+          console.log('The file has been saved!');
+        });
         break;
 
       default:
@@ -129,7 +134,7 @@ function addIntern() {
       name: 'school'
     }
   ]).then(internResponse => {
-    const newIntern = new Engineer(internResponse.name, internResponse.id, internResponse.email, internResponse.school);
+    const newIntern = new Intern(internResponse.name, internResponse.id, internResponse.email, internResponse.school);
     employeeArr.push(newIntern);
     firstQuestion();
   })
@@ -139,6 +144,7 @@ firstQuestion();
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
+
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
@@ -156,4 +162,3 @@ firstQuestion();
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
 
-render(employeeArr);
