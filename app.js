@@ -21,30 +21,36 @@ function firstQuestion() {
       type: 'list',
       message: 'What type of employee would you like to add?',
       name: 'nextEmployee',
-      choices: ['Manager', 'Engineer', 'Intern', 'Team Finished'],
+      choices: ['Manager', 'Engineer', 'Intern'],
+    },
+    {
+      type: 'input',
+      message: 'What is your name?',
+      name: 'name'
+    },
+    {
+      type: 'input',
+      message: 'What is your ID?',
+      name: 'id'
+    },
+    {
+      type: 'input',
+      message: 'What is your email?',
+      name: 'email'
     }
   ]).then((response) => {
-    console.log(response.nextEmployee);
+
     switch (response.nextEmployee) {
       case "Manager":
-        addManager();
+        addManager(response);
         break;
 
       case "Engineer":
-        addEngineer();
+        addEngineer(response);
         break;
 
       case "Intern":
-        addIntern();
-        break;
-
-      case "Team Finished":
-        const data = render(employeeArr);
-        //'./output/team.html'
-        fs.writeFile(outputPath, data, (err) => {
-          if (err) throw err;
-          console.log('The file has been saved!');
-        });
+        addIntern(response);
         break;
 
       default:
@@ -53,90 +59,69 @@ function firstQuestion() {
   })
 }
 
-function addManager() {
-  inquirer.prompt([
+function anotherEmployee() {
+  inquirer.prompt(
     {
-      type: 'input',
-      message: 'What is your name?',
-      name: 'name'
-    },
-    {
-      type: 'input',
-      message: 'What is your ID?',
-      name: 'id'
-    },
-    {
-      type: 'input',
-      message: 'What is your email?',
-      name: 'email'
-    },
+      type: 'list',
+      message: 'Do you have anymore employees to add?',
+      name: 'addEmployee',
+      choices: ['Yes', 'No'],
+    }).then(response => {
+      if (response.addEmployee === 'Yes') {
+        firstQuestion();
+      } else {
+        const data = render(employeeArr);
+        fs.writeFile(outputPath, data, (err) => {
+          if (err) throw err;
+          console.log('The file has been saved!');
+        });
+      }
+    });
+}
+
+function addManager(data) {
+  inquirer.prompt(
+
     {
       type: 'input',
       message: 'What is your office number?',
       name: 'officeNumber'
     }
-  ]).then(managerResponse => {
-    const newManager = new Manager(managerResponse.name, managerResponse.id, managerResponse.email, managerResponse.officeNumber);
+  ).then(managerResponse => {
+    const newManager = new Manager(data.name, data.id, data.email, managerResponse.officeNumber);
     employeeArr.push(newManager);
-    firstQuestion();
+
+    anotherEmployee();
   })
 }
 
-function addEngineer() {
+function addEngineer(data) {
   inquirer.prompt([
-    {
-      type: 'input',
-      message: 'What is your name?',
-      name: 'name'
-    },
-    {
-      type: 'input',
-      message: 'What is your ID?',
-      name: 'id'
-    },
-    {
-      type: 'input',
-      message: 'What is your email?',
-      name: 'email'
-    },
+
     {
       type: 'input',
       message: 'What is your Github username?',
       name: 'githubUsername'
     }
   ]).then(engineerResponse => {
-    const newEngineer = new Engineer(engineerResponse.name, engineerResponse.id, engineerResponse.email, engineerResponse.githubUsername);
+    const newEngineer = new Engineer(data.name, data.id, data.email, engineerResponse.githubUsername);
     employeeArr.push(newEngineer);
-    firstQuestion();
+    anotherEmployee();
   })
 }
 
-function addIntern() {
+function addIntern(data) {
   inquirer.prompt([
-    {
-      type: 'input',
-      message: 'What is your name?',
-      name: 'name'
-    },
-    {
-      type: 'input',
-      message: 'What is your ID?',
-      name: 'id'
-    },
-    {
-      type: 'input',
-      message: 'What is your email?',
-      name: 'email'
-    },
+
     {
       type: 'input',
       message: 'What is your school?',
       name: 'school'
     }
   ]).then(internResponse => {
-    const newIntern = new Intern(internResponse.name, internResponse.id, internResponse.email, internResponse.school);
+    const newIntern = new Intern(data.name, data.id, data.email, internResponse.school);
     employeeArr.push(newIntern);
-    firstQuestion();
+    anotherEmployee();
   })
 }
 
