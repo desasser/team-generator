@@ -34,9 +34,9 @@ function firstQuestion() {
         addEngineer();
         break;
 
-      // case "Intern":
-      //   addIntern();
-      //   break;
+      case "Intern":
+        addIntern();
+        break;
 
       case "Team Finished":
         console.log('Complete!');
@@ -102,6 +102,35 @@ function addEngineer() {
   ]).then(engineerResponse => {
     const newEngineer = new Engineer(engineerResponse.name, engineerResponse.id, engineerResponse.email, engineerResponse.githubUsername);
     employeeArr.push(newEngineer);
+    firstQuestion();
+  })
+}
+
+function addIntern() {
+  inquirer.prompt([
+    {
+      type: 'input',
+      message: 'What is your name?',
+      name: 'name'
+    },
+    {
+      type: 'input',
+      message: 'What is your ID?',
+      name: 'id'
+    },
+    {
+      type: 'input',
+      message: 'What is your email?',
+      name: 'email'
+    },
+    {
+      type: 'input',
+      message: 'What is your school?',
+      name: 'school'
+    }
+  ]).then(internResponse => {
+    const newIntern = new Engineer(internResponse.name, internResponse.id, internResponse.email, internResponse.school);
+    employeeArr.push(newIntern);
     firstQuestion();
   })
 }
